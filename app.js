@@ -23,14 +23,18 @@ app.use(function(req, res, next) {
 });
 
 // Error Handler
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.send({
-    error: {
-      message: err.message,
-    },
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const status = err.status || 'error';
+  const message = err.message || 'Something went wrong!';
+
+  res.status(statusCode).json({
+    status: status,
+    message: message,
   });
 });
+
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

@@ -4,6 +4,8 @@ const {
     checkUserCredentials 
   } = require('../services/userService');
 
+const AppError = require('../utils/AppError');
+
 // List all users
 exports.list = async (req, res) => {
   const users = await User.findAll();
@@ -14,9 +16,10 @@ exports.show = async (req, res) => {
   try {
     const user = await getUserById(req.params.id);
     if (user) {
-      res.json(user);
+        res.json(user);
     } else {
-      res.status(404).send({ message: 'User not found' });
+    //   res.status(404).send({ message: 'User not found' });
+        return next(new AppError('User not found', 404));
     }
   } catch (err) {
     res.status(500).send({ message: err.message });

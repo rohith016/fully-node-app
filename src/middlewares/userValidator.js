@@ -2,10 +2,10 @@ const { body, validationResult } = require('express-validator');
 
 const validateUser = [
   // Check if firstName is not empty
-  body('firstName').notEmpty().withMessage('First name is required'),
+  body('firstName').notEmpty().withMessage('First name is required').trim().escape(),
 
   // Check if lastName is not empty
-  body('lastName').notEmpty().withMessage('Last name is required'),
+  body('lastName').notEmpty().withMessage('Last name is required').trim().escape(),
 
   // Check if email is not empty, is an email and normalize it
   body('email').isEmail().withMessage('Email is not valid').normalizeEmail(),
