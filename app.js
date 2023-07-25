@@ -3,11 +3,14 @@ const express = require('express');
 const rateLimit = require('express-rate-limit');
 const routes = require('./src/routes');
 const connectDB = require('./src/config/db');
+// const morgan = require('morgan');
 
 const app = express();
 
 // connect to the db
 connectDB();
+
+// app.use(morgan('combined')); // Use 'combined' log format
 
 // Enable reverse proxy support in Express. This causes the
 // the "X-Forwarded-Proto" header field to be trusted so its
