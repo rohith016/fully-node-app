@@ -2,6 +2,7 @@ require('dotenv').config(); // Load environment variables
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const routes = require('./src/routes');
+const productRoutes = require('./routes/productRoutes');
 const connectDB = require('./src/config/db');
 // const morgan = require('morgan');
 
@@ -33,6 +34,7 @@ app.use(limiter);
 
 // Routes
 app.use('/', routes);
+app.use('/products', productRoutes);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
