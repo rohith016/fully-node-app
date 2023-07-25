@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { hashPassword } = require('../utils/passwordUtils');
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -17,6 +18,7 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    set: password => hashPassword(password),
   },
   createdAt: {
     type: Date,

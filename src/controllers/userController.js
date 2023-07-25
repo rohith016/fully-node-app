@@ -14,8 +14,16 @@ exports.show = async (req, res) => {
 
 // Create a new user
 exports.create = async (req, res) => {
-  const user = await User.create(req.body);
-  res.json(user);
+    try {
+        const user = new User(req.body);
+        const newUser = await user.save();
+        res.status(201).json(newUser);
+    } catch (err) {
+        if (err.name === 'MongoError' && err.code === 11000) {
+            return res.status(409).send({ message: 'Email already exists' });
+        }
+        res.status(500).send({ message: err.message });
+    }
 };
 
 module.exports = exports;
