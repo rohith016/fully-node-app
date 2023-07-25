@@ -1,12 +1,16 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const validateUser = require('../middlewares/userValidator');
+const authenticateToken = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.get('/users', userController.list);     // List all users
-router.get('/users/:id', userController.show); // Show a single user
-// add validation too
+// private routes
+router.get('/users', authenticateToken, userController.list);     // List all users
+router.get('/users/:id', authenticateToken, userController.show); // Show a single user
+
+// public routes
 router.post('/users', validateUser, userController.create);  // Create a new user
+router.post('/users/login', userController.login);
 
 module.exports = router;
