@@ -5,6 +5,7 @@ const {
   } = require('../services/userService');
 
 const AppError = require('../utils/AppError');
+const logger = require('../utils/logger');
 
 // List all users
 exports.list = async (req, res) => {
@@ -46,5 +47,15 @@ exports.login = async (req, res) => {
       res.status(400).send({ message: err.message });
     }
 };
+
+exports.testFunction = async (req, res) => {
+  // In a controller function...
+  try {
+    // Some logic...
+    logger.info('This is an informational message');
+  } catch (err) {
+    logger.error(`Error occurred: ${err.message}`);
+  }
+}
 
 module.exports = exports;
