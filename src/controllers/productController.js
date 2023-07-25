@@ -1,4 +1,5 @@
 const productService = require('../services/productService');
+const logger = require('../utils/logger');
 /**
  * 
  * @param {*} req 
@@ -56,3 +57,19 @@ exports.deleteProduct = async (req, res) => {
   }
   res.status(204).send();
 };
+/**
+ * testFunction
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.rohithFunction = async (req, res) => {
+  return res.status(404).send();
+  // console.log('hello world');
+  // In a controller function...
+  // try {
+  //   // Some logic...
+  //   logger.info('This is an informational message');
+  // } catch (err) {
+  //   logger.error(`Error occurred: ${err.message}`);
+  // }
+}

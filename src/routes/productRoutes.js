@@ -8,5 +8,6 @@ router.get('/', productController.getProducts);
 router.get('/:id', productController.getProduct);
 router.patch('/:id', productController.updateProduct);
 router.delete('/:id', productController.deleteProduct);
+router.get('/rohith', productController.rohithFunction);
 
 module.exports = router;

@@ -2,7 +2,7 @@ require('dotenv').config(); // Load environment variables
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const routes = require('./src/routes');
-const productRoutes = require('./routes/productRoutes');
+const productRoutes = require('./src/routes/productRoutes');
 const connectDB = require('./src/config/db');
 // const morgan = require('morgan');
 
