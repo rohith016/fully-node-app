@@ -1,5 +1,6 @@
 const userService = require('../services/userService');
 const AppError = require('../utils/AppError');
+const { successResponse, errorResponse } = require('../utils/response');
 /**
  * List all users
  * @param {*} req 
@@ -8,9 +9,11 @@ const AppError = require('../utils/AppError');
 exports.list = async (req, res) => {
   try {
     const users = await userService.userList(req.body);
-    res.json(users);
+    // res.json(users);
+    res.status(200).json(successResponse('Users retrieved successfully', users));
   } catch (error) {
-    res.status(500).end(err)
+    // res.status(500).end(err)
+    res.status(500).json(errorResponse('An error occurred', err, 500));
   }
   
 };
@@ -24,13 +27,14 @@ exports.show = async (req, res) => {
   try {
     const user = await userService.getUserById(req.params.id);
     if (user) {
-        res.json(user);
+      res.status(200).json(successResponse('User retrieved successfully', user));
     } else {
     //   res.status(404).send({ message: 'User not found' });
-        return next(new AppError('User not found', 404));
+      return res.status(404).json(errorResponse('User not found', null, 404));
+      // return next(new AppError('User not found', 404));
     }
   } catch (err) {
-    res.status(500).send({ message: err.message });
+    res.status(500).json(errorResponse('An error occurred', err.message, 500));
   }
 };
 /**
@@ -42,12 +46,12 @@ exports.show = async (req, res) => {
 exports.create = async (req, res) => {
     try {
       const newUser = await userService.createUser(req.body);
-      res.status(201).json(newUser);
+      res.status(201).json(successResponse('Users created successfully', newUser));
     } catch (err) {
-      if (err.name === 'MongoError' && err.code === 11000) {
-        return res.status(409).send({ message: 'Email already exists' });
-      }
-      res.status(500).send({ message: err.message });
+      if (err.name === 'MongoError' && err.code === 11000) 
+        return res.status(409).json(errorResponse('Email already exists', null, 409));
+      
+      res.status(500).json(errorResponse('An error occurred', err.message, 500));
     }
 };
 /**
@@ -58,9 +62,9 @@ exports.create = async (req, res) => {
 exports.login = async (req, res) => {
     try {
       const user = await userService.checkUserCredentials(req.body.email, req.body.password);
-      res.json(user);
+      res.status(201).json(successResponse('Users logged in successfully', user));
     } catch (err) {
-      res.status(400).send({ message: err.message });
+      res.status(400).json(errorResponse('An error occurred', err.message, 500));
     }
 };
 

@@ -1,3 +1,5 @@
+// utils/passwordUtils.js
+
 const bcrypt = require('bcrypt');
 
 // Function to hash password
