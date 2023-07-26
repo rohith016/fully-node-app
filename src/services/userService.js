@@ -13,6 +13,20 @@ exports.createUser = async (userData) => {
   return newUser;
 }
 /**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.userList = async (reqData) => {
+  try {
+    const users = await User.find().lean().exec();
+    return users;
+  } catch (error) {
+    throw new Error('Product not found');
+  }
+  
+};
+/**
  * get user details
  * @param {*} id 
  * @returns 

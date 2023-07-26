@@ -6,8 +6,13 @@ const AppError = require('../utils/AppError');
  * @param {*} res 
  */
 exports.list = async (req, res) => {
-  const users = await User.findAll();
-  res.json(users);
+  try {
+    const users = await userService.userList(req.body);
+    res.json(users);
+  } catch (error) {
+    res.status(500).end(err)
+  }
+  
 };
 /**
  * Show a single user
