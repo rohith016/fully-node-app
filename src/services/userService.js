@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const { hashPassword, comparePasswords } = require('../utils/passwordUtils');
 const { generateToken } = require('../utils/jwtUtils');
+const logger = require('../utils/logger');
+
 /**
  * create new user
  * @param {*} userData 
@@ -50,4 +52,13 @@ exports.checkUserCredentials = async (email, password) => {
     throw new Error('Invalid email or password');
   }
 }
+/**
+ * 
+ * @returns 
+ */
+exports.sampleLogMessage = async () => {
+  logger.info('This is an informational message');
+  logger.error('Error occurred');
 
+  return true
+}

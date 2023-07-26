@@ -67,6 +67,17 @@ exports.login = async (req, res) => {
       res.status(400).json(errorResponse('An error occurred', err.message, 500));
     }
 };
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.sampleLogMessage = async (req, res) => {
+  try {
+    const result = await userService.sampleLogMessage()
+    res.status(200).json(successResponse('Message logged in successfully', null, 200))
 
-
-// module.exports = exports;
+  } catch (error) {
+    res.status(500).json(errorResponse('An error occurred', error.message, 500))
+  }
+}

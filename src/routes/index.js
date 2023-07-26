@@ -10,6 +10,7 @@ router.get('/users', authenticateToken, userController.list);     // List all us
 router.get('/users/:id', authenticateToken, userController.show); // Show a single user
 
 // public routes
+router.get('/logger', userController.sampleLogMessage);
 router.post('/users', validateUser, userController.create);  // Create a new user
 router.post('/users/login', userController.login);
 
