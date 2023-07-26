@@ -18,12 +18,20 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    // set: password => hashPassword(password),
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
+});
+
+// Hash the password before saving
+UserSchema.pre('save', async function(next) {
+  // Only hash the password if it has been modified (or is new)
+  if (this.isModified('password')) {
+    this.password = await hashPassword(this.password);
+  }
+  next();
 });
 
 module.exports = mongoose.model('User', UserSchema);

@@ -7,7 +7,7 @@ const { generateToken } = require('../utils/jwtUtils');
  * @returns 
  */
 exports.createUser = async (userData) => {
-  userData.password = await hashPassword(userData.password);
+  // userData.password = await hashPassword(userData.password);
   const user = new User(userData);
   const newUser = await user.save();
   return newUser;
@@ -19,7 +19,7 @@ exports.createUser = async (userData) => {
  */
 exports.userList = async (reqData) => {
   try {
-    const users = await User.find().lean().exec();
+    const users = await User.find().select('-password').lean().exec();
     return users;
   } catch (error) {
     throw new Error('Product not found');
@@ -32,7 +32,7 @@ exports.userList = async (reqData) => {
  * @returns 
  */
 exports.getUserById = async (id) => {
-  const user = await User.findById(id);
+  const user = await User.findById(id).select('-password');
   return user;
 }
 /**
