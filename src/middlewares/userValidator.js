@@ -1,4 +1,7 @@
 const { body, validationResult } = require('express-validator');
+const { errorResponse } = require('../utils/response');
+const HTTP = require('../config/httpCodes');
+
 
 const validateUser = [
   // Check if firstName is not empty
@@ -17,7 +20,8 @@ const validateUser = [
     // Execute validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      // return res.status(HTTP.STATUS_BAD_REQUEST).json({ errors: errors.array() });
+      return res.status(HTTP.STATUS_BAD_REQUEST).json(errorResponse('Validation Error', errors.array(), HTTP.STATUS_BAD_REQUEST));
     }
 
     // Proceed to the next middleware if validation passed
