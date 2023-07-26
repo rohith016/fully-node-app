@@ -8,7 +8,8 @@ const router = express.Router();
 // private routes
 router.get('/users', authenticateToken, userController.list);     // List all users
 router.get('/users/:id', authenticateToken, userController.show); // Show a single user
-
+router.patch('/users/:id', authenticateToken, userController.updateUser);
+router.delete('/users/:id', authenticateToken, userController.deleteUser);
 // public routes
 router.get('/logger', userController.sampleLogMessage);
 router.post('/users', validateUser, userController.create);  // Create a new user

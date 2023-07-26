@@ -38,6 +38,25 @@ exports.getUserById = async (id) => {
   return user;
 }
 /**
+ * 
+ * @param {*} userId 
+ * @param {*} userData 
+ * @returns 
+ */
+exports.updateUser = async (userId, userData) => {
+    const user = await User.findByIdAndUpdate(userId, userData, { new: true, runValidators: true });
+    return user;
+};
+/**
+ * 
+ * @param {*} userId 
+ * @returns 
+ */
+exports.deleteUser = async (userId) => {
+  const user = await User.findByIdAndDelete(userId);
+  return user;
+};
+/**
  * login user
  * @param {*} email 
  * @param {*} password 
