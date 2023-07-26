@@ -46,7 +46,7 @@ exports.show = async (req, res) => {
 exports.create = async (req, res) => {
     try {
       const newUser = await userService.createUser(req.body);
-      res.status(201).json(successResponse('Users created successfully', newUser));
+      res.status(201).json(successResponse('Users created successfully', newUser, 201));
     } catch (err) {
       if (err.name === 'MongoError' && err.code === 11000) 
         return res.status(409).json(errorResponse('Email already exists', null, 409));

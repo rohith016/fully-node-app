@@ -12,6 +12,6 @@ describe('User Endpoints', () => {
         password: 'test123'
       });
     expect(res.statusCode).toEqual(201);
-    expect(res.body).toHaveProperty('email', 'test@user.com');
+    expect(res.body.data).toHaveProperty('email', 'test@user.com');
   });
 });
