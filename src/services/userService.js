@@ -57,6 +57,16 @@ exports.deleteUser = async (userId) => {
   return user;
 };
 /**
+ * 
+ * @param {*} userId 
+ * @param {*} status 
+ * @returns 
+ */
+exports.updateUserStatus = async (userId, status) => {
+  const user = await User.findByIdAndUpdate(userId, { status }, { new: true, runValidators: true });
+  return user;
+};
+/**
  * login user
  * @param {*} email 
  * @param {*} password 

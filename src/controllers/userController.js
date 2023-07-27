@@ -96,6 +96,28 @@ exports.deleteUser = async (req, res) => {
   }
 };
 /**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
+exports.updateUserStatus = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { status } = req.body;
+    const statusUpdatedUser = await userService.updateUserStatus(userId, status);
+    
+    if (!statusUpdatedUser) 
+      return res.status(HTTP.STATUS_NOT_FOUND).json(errorResponse(MESSAGE.USER_NOT_FOUND, null, HTTP.STATUS_NOT_FOUND));
+    
+    return res.status(HTTP.STATUS_OK).json(successResponse(MESSAGE.USER_UPDATED_SUCCESS, statusUpdatedUser, HTTP.STATUS_OK));
+
+  } catch (error) {
+    return  res.status(HTTP.STATUS_SERVER_ERROR).json(errorResponse(MESSAGE.GENERIC_ERROR, error.message, HTTP.STATUS_SERVER_ERROR));
+  }
+};
+/**
  * Check user credentials
  * @param {*} req 
  * @param {*} res 
