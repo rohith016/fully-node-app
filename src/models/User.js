@@ -23,12 +23,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ['active', 'inactive'],
     default: 'active'
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  }
+}, { timestamps: true });
 
 // Hash the password before saving
 UserSchema.pre('save', async function(next) {

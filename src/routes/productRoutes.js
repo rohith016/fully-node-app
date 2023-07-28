@@ -1,13 +1,26 @@
 const express = require('express');
 const productController = require('../controllers/productController');
+const authenticateToken = require('../middlewares/auth');
+const { validateProductCreate, validateProductUpdate, validateProductEdit, validateProductDelete } = require('../middlewares/apiValidations/productValidator');
+
 
 const router = express.Router();
 
-router.post('/', productController.createProduct);
-router.get('/', productController.getProducts);
-router.get('/:id', productController.getProduct);
-router.patch('/:id', productController.updateProduct);
-router.delete('/:id', productController.deleteProduct);
-router.get('/rohith', productController.rohithFunction);
+/**
+ * private routes
+ */
+const authRoutes = express.Router();
+authRoutes.use(authenticateToken);
+
+authRoutes.route('/')
+  .get(productController.getProductList)
+  .post(validateProductCreate, productController.createProduct); 
+
+authRoutes.route('/:id')
+  .get(validateProductEdit, productController.getProduct) 
+  .patch(validateProductUpdate, productController.updateProduct) 
+  .delete(validateProductDelete, productController.deleteProduct); 
+
+router.use('/', authRoutes);
 
 module.exports = router;

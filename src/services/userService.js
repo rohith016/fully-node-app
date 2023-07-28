@@ -24,7 +24,7 @@ exports.userList = async (reqData) => {
     const users = await User.find().select('-password').lean().exec();
     return users;
   } catch (error) {
-    throw new Error('Product not found');
+    throw new Error('Users not found');
   }
   
 };

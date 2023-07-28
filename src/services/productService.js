@@ -13,9 +13,14 @@ exports.createProduct = async (productData) => {
  * get all products
  * @returns 
  */
-exports.getProducts = async () => {
-  const products = await Product.find();
-  return products;
+exports.getProducts = async (reqData) => {
+  try {
+    const products = await Product.find().lean().exec();
+    return products;
+  } catch (error) {
+    throw new Error('Products not found');
+  }
+
 };
 /**
  * get product details
@@ -37,6 +42,7 @@ exports.updateProduct = async (id, updateData) => {
   if (!product) {
     throw new Error('Product not found');
   }
+  // const product = await Product.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
   Object.keys(updateData).forEach((update) => product[update] = updateData[update]);
   await product.save();
   return product;
